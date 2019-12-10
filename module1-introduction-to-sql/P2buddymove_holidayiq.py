@@ -4,7 +4,7 @@ import pandas
 df= pd.read_csv(buddymove_holidayiq.csv)
 
 def obtain_name(buddymove_holidayiq.sqlite3, df.to_sql):
-    query= df.shape
+    query= 'SELECT * FROM df;'
     
     connection = sqlite3.connect(buddymove_holidayiq.sqlite3)
     cursor = connection.cursor()
