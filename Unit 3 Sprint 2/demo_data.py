@@ -1,18 +1,55 @@
 import sqlite3
-import psycopg2
 
-dbname = 'ywpeznmd'
-user = 'ywpeznmd'
-password = 'H0syXj4cKi7m-30bHGZmcB-TCHkPIMhr'
-host = 'rajje.db.elephantsql.com'
+conn = sqlite3.connect('demo_data.sqlite3')
+curs = sl_conn.cursor()
 
-pg_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
-pg_curs = pg_conn.cursor()
-pg_curs.execute('SELECT * FROM demo_table;')
-pg_curs.fetchall()
+def dbt_create():
+    table = '''CREATE TABLE demo_table(
+    s text NOT NULL,
+    x int NOT NULL,
+    y int NOT NULL
+    )'''
+    curs.execute(table)
 
-import sqlite3
-sl_conn = sqlite3.connect('demo_data.sqlite3')
-sl_curs = sl_conn.cursor()
+dbt_create()
 
-pg_curs.execute('INSERT INTO demo_table VALUES ("'g'",3,9))
+def dbt_insert():
+    table2= '''INSERT INTO demo_table VALUES
+        ('g', 3, 9),
+        ('v', 5, 7),
+        ('f', 8, 7)'''
+    curs.execute(table2)
+    
+dbt_insert()
+
+def dbt_save():
+    conn.commit()
+    
+dbt_save()
+
+# COunting all the rows
+def row_count():
+    q1= ''' SELECT COUNT (s) FROM demo_table'''
+    curs.execute(q1)
+    return curs.fetchall()
+
+row_count()
+
+# Query rows greater than 5
+def min_count():
+    q2 = ''' SELECT COUNT(*) FROM demo_table 
+    WHERE x >=5 and y >=5'''
+    curs.execute(q1)
+    return curs.fetchall()
+
+min_count()
+
+# Counting the Unique y values
+
+def unique_count():
+    q4 = '''SELECT COUNT(DISTINCT y) FROM demo_table'''
+    curs.execute(q4)
+    return curs.fetchall()
+
+unique_count()
+
